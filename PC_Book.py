@@ -5,6 +5,8 @@ from urllib import parse
 import datetime
 import json
 from bs4 import BeautifulSoup
+import time
+
 
 def getCaptcha(headers):
     captcha_url='http://seat.lib.whu.edu.cn/simpleCaptcha/captcha'
@@ -17,7 +19,7 @@ def getCaptcha(headers):
         print('验证码已经获取')
     image.show()
 
-if __name__=='__main__':
+def function():
     #个人和预定的信息
     book_url='http://seat.lib.whu.edu.cn/selfRes'
     username='2015302580292'
@@ -25,7 +27,7 @@ if __name__=='__main__':
     date=datetime.date.today()
     if datetime.datetime.today().hour*60+datetime.datetime.today().minute>=1340:
         date=date+datetime.timedelta(days=1)
-    start_time='1140'
+    start_time='540'
     end_time='1320'
     # 获取用于登录的cookie
     index_url = 'http://seat.lib.whu.edu.cn/'
@@ -159,3 +161,19 @@ if __name__=='__main__':
                 print('当前房间没有符合您要求的座位，开始搜索下一间')
     if find==False:
         print('对不起，未找到合适的房间座位')
+
+if __name__=='__main__':
+    a=input('1、现在运行，2、定时运行（22：30）')
+    if a=='1':
+        function()
+    if a=='2':
+        schedual_time = datetime.datetime(2018, 3, 10, 22, 30, 0)
+        loop = 0
+        while True:
+            if schedual_time <= datetime.datetime.now() < schedual_time + datetime.timedelta(seconds=1):
+                loop = 1
+                time.sleep(1)
+                if loop == 1:
+                    function()
+                    loop == 0
+
